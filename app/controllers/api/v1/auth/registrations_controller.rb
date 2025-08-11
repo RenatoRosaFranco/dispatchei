@@ -8,10 +8,7 @@ module API
 
         def create
           result = ::Auth::RegisterUser.call(params: sign_up_params)
-
-          unless result.success?
-            return render json: { errors: result.errors }, status: :unprocessable_entity
-          end
+          return render json: { errors: result.errors }, status: :unprocessable_entity unless result.success?
 
           user = result.user
           token, _ = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)

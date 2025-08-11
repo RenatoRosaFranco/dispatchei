@@ -8,11 +8,8 @@ module API
 
         def create
           result = ::Auth::AuthenticateUser.call(email: params[:email], password: params[:password])
-
-          unless result.success?
-            return render json: { error: result.errors }, status: :unauthorized
-          end
-
+          return render json: { error: result.errors }, status: :unauthorized unless result.success?
+          
           user = result.user
 
           token, _payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
