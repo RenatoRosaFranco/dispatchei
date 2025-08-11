@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_11_030758) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_11_161250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_030758) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.bigint "shipment_id", null: false
+    t.text "qrcode_payload"
+    t.string "pdf_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shipment_id"], name: "index_labels_on_shipment_id"
   end
 
   create_table "pickup_snapshots", force: :cascade do |t|
@@ -96,6 +105,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_11_030758) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "labels", "shipments"
   add_foreign_key "shipments", "dropoff_snapshots"
   add_foreign_key "shipments", "pickup_snapshots"
   add_foreign_key "shipments", "users", column: "customer_id"
