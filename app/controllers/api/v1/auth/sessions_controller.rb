@@ -14,18 +14,15 @@ module API
           end
 
           user = result.user
-          token, _payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
 
+          token, _payload = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
           response.set_header('Authorization', "Bearer #{token}")
-          render json: {
-            token: token,
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-              role: user.role
-            }
-          }, status: :ok
+
+
+          render json: Wrappers::AuthResponse.new(token:, user:),
+                 serializer: LoginResponseSerializer,
+                 scope: nil,
+                 status: :ok
         end
 
         def destroy

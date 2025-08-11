@@ -17,17 +17,17 @@ module API
           token, _ = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
 
           response.set_header('Authorization', "Bearer #{token}")
-          render json: { token: token, user: serialize_user(user) }, status: :created
+
+          render json: Wrappers::AuthResponse.new(token:, user:),
+                 serializer: RegisterResponseSerializer,
+                 scope: nil,
+                 status: :ok
         end
 
         private
 
         def sign_up_params
           params.require(:user).permit(:name, :email, :password, :role)
-        end
-
-        def serialize_user(user)
-          { id: user.id, name: user.name, email: user.email, role: user.role }
         end
       end
     end
