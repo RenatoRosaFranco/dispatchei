@@ -27,6 +27,9 @@ gem "thruster", require: false
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem 'dotenv-rails'
+  gem 'rspec-rails'
+  gem 'shoulda'
+  gem 'database_cleaner'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'super_awesome_print'
