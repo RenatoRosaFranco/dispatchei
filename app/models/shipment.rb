@@ -3,19 +3,9 @@
 class Shipment < ApplicationRecord
   include AASM
 
-  SHIPMENT_STATUSES = {
-    created: 0,
-    assigned: 1,
-    picked_up: 2,
-    in_transit: 3,
-    delivered: 4,
-    exception: 5,
-    canceled: 6
-  }.freeze
-
   # Enums
-  enum :service_type, { urban: 0, intermunicipal: 1 }
-  enum :status, SHIPMENT_STATUSES
+  enum :service_type, Enums::Shipment.service_types, prefix: true
+  enum :status, Enums::Shipment.statuses, prefix: true
 
   # Associations
   belongs_to :customer, class_name: 'User'
