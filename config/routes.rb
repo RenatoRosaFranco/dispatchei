@@ -12,6 +12,10 @@ Rails.application.routes.draw do
       end
       
       get 'me', to: 'profiles#show'
+    
+      resources :shipments, only: [:index, :show, :create] do
+        
+      end
     end
   end
 end
