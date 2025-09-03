@@ -202,7 +202,7 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
-    ffaker (2.24.0)
+    ffaker (2.25.0)
     flay (2.13.3)
       erubi (~> 1.10)
       path_expander (~> 1.0)
